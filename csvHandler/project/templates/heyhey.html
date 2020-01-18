@@ -1,0 +1,211 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Restaurant Finder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/navbar-static/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/docs/4.0/examples/navbar-static/navbar-top.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <section class="hero is-info">
+      {% include 'registration/nav_accounts.html' %}
+        <div class="hero-body">
+
+            <div class="container">
+
+                <h1 class="title" align = "center">
+                    Is there any restaurant available? <p></p><h3 align ="center"><p >Let's find out!</p></h3>
+                </h1>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-2 is-8">
+                    <form method="POST" action = '/listall/post'>
+                        {% csrf_token %}
+                        <div class="field has-addons">
+
+                            <!-- <div class="control is-expanded"> -->
+                               <!-- <input name="week" placeholder="輸入星期" label='week'> </input> -->
+
+                                <!-- {{ form.day }} -->
+                            <!-- </div> -->
+                            <!-- <div class="control is-expanded"> -->
+                                <!-- <input name="day" placeholder="輸入時間"  label='day'> </input> -->
+
+                                <!-- {{ form.week }} -->
+                            <!-- </div> -->
+
+                            <div class="control is-expanded" >
+                                <input name="datetimes" placeholder="輸入時間"  label='datetimes' class='input' required> </input>
+
+
+                                <!-- {{ form.week }} -->
+                            </div>
+                            <div class="control is-expanded" >
+                                <select id = theList size=1 name='week' label= 'week' class = 'input' required >
+                                  <option value=Sunday>Sunday
+                                  <option value=Monday>Monday
+                                  <option value=Tuesday>Tuesday
+                                  <option value=Wednesday>Wednesday
+                                  <option value=Thursday>Thursday
+                                  <option value=Friday>Friday
+                                  <option value=Saturday>Saturday
+                                </select>
+                            </div>
+
+
+                            <div class="control">
+                                <button type="submit" class='button is-warning'>
+                                    Find Table
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- {% if message %}
+                            <div class="notification {{ message_class }}">{{ message }}</div>
+                        {% endif %} -->
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-2 is-8">
+                  {% for ttt in ttts %}
+                  <div class="box">
+                      <article class="media">
+                          <!-- <div class="media-left">
+                              <figure class="image is-50x50">
+                                  <img src="#" alt="Image">
+                              </figure>
+                          </div> -->
+                          <div class="media-content">
+                              <div class="content">
+                                  <p>
+                                    <table>
+                                      <th class='control is-expanded'>ID</th>
+
+
+                                      <span><th class=''> Name </th></span>
+
+                                      <th class=''>Sunday</th>
+
+                                      <th class=''>Monday</th>
+
+                                      <th class=''>Tuesday</th>
+
+                                      <th class=''>Wedensday</th>
+
+                                      <th class=''>Thursday</th>
+
+                                      <th class=''>Friday</th>
+
+                                      <th class=''>Saturday</th>
+                                    </table>
+                                  </p>
+                                  <p>
+                                    <table>
+                                      <tr >
+                                          <td class=''>{{ttt.id}}</td>
+                                          <td class=''>{{ttt.restaurantName}}</td>
+                                          <td class=''>{{ttt.timeSunday}}</td>
+                                          <td class=''>{{ttt.timeMonday}}</td>
+                                          <td class=''>{{ttt.timeTuesday}}</td>
+                                          <td class=''>{{ttt.timeWedensday}}</td>
+                                          <td class=''>{{ttt.timeThursday}}</td>
+                                          <td class=''>{{ttt.timeFriday}}</td>
+                                          <td class=''>{{ttt.timeSaturday}}</td>
+
+
+                                      </tr>
+                                    </table>
+                                  </p>
+                              </div>
+                          </div>
+                          <!-- <div class="media-right">
+                              <a href="#">
+                                  <button class="delete"></button>
+                              </a>
+                          </div> -->
+                      </article>
+                  </div>
+                  {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+    </footer>
+</body>
+<script>
+    $(function() {
+      $('input[name="birthday"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        minYear: 1901,
+        maxYear: parseInt(moment().format('YYYY'),10)
+      }, function(start, end, label) {
+        var years = moment().diff(start, 'years');
+        <!-- alert("You are " + years + " years old!"); -->
+      });
+    });
+</script>
+<script>
+$(function() {
+  $('input[name="datetimes"]').daterangepicker({
+    timePicker: true,
+    startDate: moment().startOf('hour'),
+    endDate: moment().startOf('hour').add(32, 'hour'),
+    locale: {
+      format: 'M/DD HH:mm:ss '
+    }
+  });
+});
+</script>
+<script>
+function deleteOption(list){
+	var index=list.selectedIndex;
+	if (index>=0)
+		list.options[index]=null;
+	else
+		alert("無反白選項！");
+}
+
+function addOption(list, text, value){
+	var index=list.options.length;
+	list.options[index]=new Option(text, value);
+	list.selectedIndex=index;
+}
+</script>
+
+
+</html>
